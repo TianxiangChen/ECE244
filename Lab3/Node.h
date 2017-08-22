@@ -9,7 +9,11 @@
 #define NODE_H
 
 #define MAX_RESISTORS_PER_NODE 5
-
+#include <string>
+#include <iostream>
+#include <iomanip>
+#include "Resistor.h"
+using namespace std;
 
 class Node
 {
@@ -27,10 +31,11 @@ public:
    // Returns true if successful
    bool addResistor (int rIndex); 
 
+   int getResNum() const; // returns the numRes
+   int getIndex(int NodeNum) const; //return the index
    // prints the whole node
    // nodeIndex is the position of this node in the node array.
-   void print (int nodeIndex); 
-
+   void printNode(int nodeid, Resistor *res);
 };
 
 #endif	/* NODE_H */
