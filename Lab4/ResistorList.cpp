@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 #include "ResistorList.h"
 
 ResistorList::ResistorList(){
@@ -22,8 +17,8 @@ ResistorList::~ResistorList(){
     head = NULL;
 }
 
-void ResistorList::Insert(string name_, double resistance_, int endpoint0, int endpoint1){    
-    Resistor *res = new Resistor(name_,resistance_,endpoint0,endpoint1);
+void ResistorList::Insert(string name_, double resistance_, int endpoint0,
+        int endpoint1, NodeList *nlist){    
     Resistor *prev,*curr;
     prev = NULL;
     curr = head;
@@ -37,17 +32,22 @@ void ResistorList::Insert(string name_, double resistance_, int endpoint0, int e
         curr = curr->getNext();
     }
     
+    Resistor *res = new Resistor(name_,resistance_,endpoint0,endpoint1);
+    
     if(prev==NULL){//empty list
         head = res;
     }
     else{
         prev->setNext(res);
     }
+    
+    nlist->Insert(endpoint0, res);
+    nlist->Insert(endpoint1, res);
     cout<<"Inserted: resistor "<<name_<<" "<<setprecision(2)<<std::fixed
             <<resistance_<<" Ohms "<<endpoint0<<" -> "<<endpoint1<<endl;
 }
 
-bool ResistorList::Delete(string name_){
+bool ResistorList::Delete(string name_, NodeList *nlist){
     if(name_ == "all"){
         //All resistors cleared and Node array updated so we have an empty network
         delete this;
@@ -66,12 +66,13 @@ bool ResistorList::Delete(string name_){
             if(curr->getName() == name_){
                 if(prev==NULL){//at head
                     head = curr->getNext();
-                    delete curr;
                 }
                 else{
-                    prev->setNext(curr->getNext());
-                    delete curr;
+                    prev->setNext(curr->getNext());       
                 }
+                nlist->Delete(curr->getNode1(),curr);
+                nlist->Delete(curr->getNode2(),curr);
+                delete curr;
                 cout<<"Deleted: resistor "<<name_<<endl;
                 return true;
             }
@@ -97,6 +98,10 @@ bool ResistorList::Modify(string name_, double resistance_){
 }
    
 bool ResistorList::Print(string name_){
+    if(name_ == "all"){
+        Print_NoAll();
+        return false;
+    }
     Resistor *temp = Find(name_);
     if(temp==NULL){//check if the resistor is  in the list
         Print_Res_Not_Found(name_);
@@ -105,6 +110,7 @@ bool ResistorList::Print(string name_){
     else{
         cout<<"Print:"<<endl;
         temp->print();
+        return true;
     }
 }
 

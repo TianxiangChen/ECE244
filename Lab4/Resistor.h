@@ -30,7 +30,10 @@ public:
 
    string getName() const; // returns the name
    double getResistance() const; // returns the resistance
+   int getNode1() const;
+   int getNode2() const;
    Resistor *getNext() const; //return the next pointer
+   int getTheOtherNode(int nodeid);//return the other node
 
    void setAll(string name_,double resistance_,int endpoints0,int endpoints1);
    void setResistance (double resistance_);

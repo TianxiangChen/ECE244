@@ -8,11 +8,11 @@
 #ifndef NODE_H
 #define NODE_H
 
-#define MAX_RESISTORS_PER_NODE 5
 #include <string>
 #include <iostream>
 #include <iomanip>
 #include "Resistor.h"
+#include "ResAddrList.h"
 using namespace std;
 
 class Node
@@ -21,24 +21,39 @@ private:
     
    int ID;//node ID
    int numRes; // number of resistors currently connected
-   int resIDArray[MAX_RESISTORS_PER_NODE]; // stores the index of each resistor connected
-   
+   bool set;
+   bool converge;//if the change for solve is smaller than MIN ITERATION CHANGE
+   double voltage;
+   ResAddrList *head;
+   Node *next;
 
 public:
    Node();
    ~Node();
+   Node(int ID_, Resistor *addr);
 
-   // Updates resIDArray to show the resistor in position rIndex in
-   // the resistor array is now connected to this node.
-   // Returns true if successful
-   bool addResistor (int rIndex); 
+   //bool addResistor (int rIndex); 
 
    int getResNum() const; // returns the numRes
-   int getIndex(int NodeNum) const; //return the index
    int getID () const;
-   // prints the whole node
-   // nodeIndex is the position of this node in the node array.
-   void printNode(int nodeid, Resistor *res);
+   Node *getNext() const;
+   double getVoltage() const;
+   ResAddrList* getHead() const;
+   bool IsSet() const;
+   bool IsConverge() const;
+   
+   void setID(int nodeid);
+   void addResNum();
+   void addRes(Resistor *addr);
+   void deleteRes(Resistor *addr);
+   void setNext(Node *next_);
+   void setSet();
+   void setVoltage(double voltage_);
+   void unsetVoltage();
+   void setConverge();
+   void setDiverge();
+   void printNode();
+   void voltage_cal();
 };
 
 #endif	/* NODE_H */

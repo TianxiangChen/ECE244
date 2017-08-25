@@ -5,6 +5,7 @@
 
 int Parser() {
     ResistorList *res_head = new ResistorList;
+    NodeList *node_head = new NodeList;
     string line, command;
     cout<<"> ";
     getline (cin, line);
@@ -17,7 +18,7 @@ int Parser() {
         }
         else{
             if (command == "insertR") {
-                insertR(lineStream, res_head);
+                insertR(lineStream, node_head, res_head);
             }
             else if (command == "modifyR") {
                 modifyR(lineStream,res_head);
@@ -26,19 +27,19 @@ int Parser() {
                 printR(lineStream,res_head);
             }
             else if (command == "printNode"){
-                ;//printNode(lineStream,res,node,MaxNodeNumber);
+                printNode(lineStream, node_head);
             }
             else if (command == "deleteR"){
-                deleteR(lineStream,res_head);
+                deleteR(lineStream, node_head, res_head);
             }
             else if (command == "setV"){
-                ;
+                setV(lineStream, node_head);
             }
             else if (command == "unsetV"){
-                ;
+                unsetV(lineStream, node_head);
             }
             else if (command == "solve"){
-                ;
+                solve(lineStream, node_head);
             }
             else
                 Print_InvalidCom();
@@ -48,14 +49,14 @@ int Parser() {
         getline (cin, line);
     }
     delete res_head;
-//    delete []node;
+    delete node_head;
     res_head=NULL;
-//    node=NULL;
+    node_head=NULL;
     // End input loop until EOF.
     return 0;
 }
 
-void insertR(stringstream &lineStream, ResistorList *res_head){
+void insertR(stringstream &lineStream, NodeList *node_head, ResistorList *res_head){
     string name;
     double resistance;
     int nodeid1, nodeid2;
@@ -74,11 +75,7 @@ void insertR(stringstream &lineStream, ResistorList *res_head){
         return;
     
     //Parser checking finishes, start inserting data
-    res_head->Insert(name, resistance, nodeid1, nodeid2);
-    //res[res_index].setAll(res_index,name,resistance,nodeid1,nodeid2);
-    //node[nodeid1].addResistor(res_index);
-    //node[nodeid2].addResistor(res_index);
-    
+    res_head->Insert(name, resistance, nodeid1, nodeid2,node_head);  
 }
 
 void modifyR(stringstream &lineStream, ResistorList *res_head){
@@ -108,54 +105,52 @@ void printR(stringstream &lineStream, ResistorList *res_head){
     res_head->Print(name);
 }
 
-void printNode(stringstream &lineStream, Resistor *res, Node *node,
-        const int MaxNodeNumber){
+void printNode(stringstream &lineStream, NodeList *nlist){
     string name;
     int nodeid;
     if (TooFewArguChecking(lineStream))
         return;
     if(!NameChecking4(lineStream, name,nodeid))
         return;
-    
-    if(name == "all"){
-        cout<<"Print:"<<endl;
-        for(int i=0; i<MaxNodeNumber;i++){
-            if(node[i].getResNum()>0){
-                node[i].printNode(i,res);
-//                cout<<"Connections at node "<<i<<": "<<node[i].getResNum()
-//                        <<" resistor(s)"<<endl;
-//                for(int j=0; j<node[i].getResNum();j++){
-//                    cout<<"  "<<(cout,res[node[i].getIndex(j)]);
-                }
-            
-            else
-                cout<<"Print:"<<endl<<"Connections at node "<<i
-                        <<": 0 resistor(s)"<<endl; 
-        }
-    }
-    else{
-        cout<<"Connections at node "<<nodeid<<": "<<node[nodeid].getResNum()
-                        <<" resistor(s)"<<endl;
-        if(node[nodeid].getResNum()>0){
-            for(int i=0; i<node[nodeid].getResNum();i++){
-                node[i].printNode(i,res);
-//                cout<<"  "<<(cout,res[node[nodeid].getIndex(i)]);
-                }
-        }
-    }
+    nlist->Print(name, nodeid);
 }
 
-void deleteR(stringstream &lineStream, ResistorList *res_head){
+void deleteR(stringstream &lineStream, NodeList *node_head, ResistorList *res_head){
     string name;
     if (TooFewArguChecking(lineStream))
         return;
     if(!NameChecking3(lineStream, name))
         return;
     
-    res_head->Delete(name);
+    res_head->Delete(name,node_head);
 }
 
+void setV(stringstream &lineStream, NodeList *node_head){
+    int nodeid;
+    double voltage;
+    
+    if(!NodeChecking(lineStream, nodeid))
+        return;
+    if(!VoltageChecking(lineStream, voltage))
+        return;
+    if (TooManyArguChecking(lineStream))
+        return;
+    node_head->setV(nodeid, voltage);
+}
+void unsetV(stringstream &lineStream, NodeList *node_head){
+    int nodeid;
+    if(!NodeChecking3(lineStream, nodeid))
+        return;
+    if (TooManyArguChecking(lineStream))
+        return;
+    node_head->unsetV(nodeid);
+}
 
+void solve(stringstream &lineStream, NodeList *node_head){
+    if (TooManyArguChecking(lineStream))
+        return;
+    node_head->solve();
+}
 //Valid Checking
 bool NameChecking(stringstream &lineStream, string &name){
     lineStream >> name;
@@ -301,6 +296,35 @@ bool Node2Checking(stringstream &lineStream, int &nodeid1, int &nodeid2){
     return true;
 }
 
+bool NodeChecking3(stringstream &lineStream, int &nodeid){
+    lineStream >> nodeid;
+    if(lineStream.fail()){
+        Print_InvalidArgu();
+        return false;
+    }
+    else if( lineStream.peek()!=' ' && !lineStream.eof()){
+        Print_InvalidArgu();
+        return false;
+    }
+    else if(nodeid<LowBound){
+        Print_NodeExceed(nodeid);
+        return false;
+    }
+    return true;
+}
+
+bool VoltageChecking(stringstream &lineStream, double &voltage){
+    lineStream >> voltage;
+    if(lineStream.fail()){
+        Print_InvalidArgu();
+        return false;
+    }
+    else if( lineStream.peek()!=' ' && !lineStream.eof()){
+        Print_InvalidArgu();
+        return false;
+    }
+    return true;
+}
 bool TooFewArguChecking(stringstream &lineStream){
     
     if (lineStream.eof()){

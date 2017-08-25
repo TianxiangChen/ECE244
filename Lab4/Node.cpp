@@ -1,41 +1,121 @@
-/*
- * Node.cpp
- */
 #include "Node.h"
 
 Node::Node(){
     numRes = 0;
+    head = NULL;
+    next = NULL;
+    set = false;
+    voltage = 0;
+    converge = false;
 }
 
 Node::~Node(){
-    ;
+    numRes = 0;
+    next = NULL;
+    if(head != NULL){
+        head->~ResAddrList();
+        delete head;
+    }
+    head = NULL;
+    set = false;
+    voltage = 0;
+    converge = false;
 }
 
-   // Updates resIDArray to show the resistor in position rIndex in
-   // the resistor array is now connected to this node.
-   // Returns true if successful
-bool Node::addResistor (int rIndex){
-    if(numRes >= MAX_RESISTORS_PER_NODE)
-        return false;
-    resIDArray[numRes]=rIndex;
-    numRes++;
-    return true;
-} 
+Node::Node(int ID_, Resistor *addr){
+    ID = ID_;
+    numRes = 1;
+    next = NULL;
+    if(head==NULL){
+        head = new ResAddrList;
+    }
+    head->Insert(addr);
+}
+
+
 
 int Node::getResNum() const{
     return numRes;
 }
 
-int Node::getIndex(int NodeNum) const{
-    return resIDArray[NodeNum];
-}
-
 int Node::getID() const{
     return ID;
 }
-void Node::printNode(int nodeid, Resistor *res){
-    cout<<"Connections at node "<<nodeid<<": "<<numRes<<" resistor(s)"<<endl;
-                for(int i=0; i<numRes;i++){
-                    cout<<"  "<<(cout,res[resIDArray[i]]);
-                }
+
+Node* Node::getNext() const{
+    return next;
+}
+
+double Node::getVoltage() const{
+    return voltage;
+}
+
+ResAddrList* Node::getHead() const{
+    return head;
+}
+
+bool Node::IsSet() const{
+    return set;
+}
+
+bool Node::IsConverge() const{
+    return converge;
+}
+
+void Node::setID(int nodeid){
+    ID=nodeid;
+}
+
+void Node::addResNum(){
+    numRes++;
+}
+
+void Node::addRes(Resistor *addr){
+    numRes++;
+    head->Insert(addr);
+}
+
+void Node::deleteRes(Resistor *addr){
+    if(head->Delete(addr));
+        numRes--;
+}
+
+void Node::setNext(Node* next_){
+    next = next_;
+}
+
+void Node::setSet(){
+    set = true;
+}
+
+void Node::setVoltage(double voltage_){
+    voltage = voltage_;
+}
+   
+void Node::unsetVoltage(){
+    voltage = 0;
+    set = false;
+    cout<<"Unset: the solver will determine the voltage of node "<<ID<<endl;
+}
+   
+void Node::setConverge(){
+    converge = true;
+}
+
+void Node::setDiverge(){
+    converge = false;
+}
+
+void Node::printNode(){
+    cout<<"Connections at node "<<ID<<": "<<numRes<<" resistor(s)"<<endl;
+    if(numRes == 0)
+        return;
+    head->Print();
+}
+
+void Node::voltage_cal(){
+    double eqv_r = 1;//the first term of the formula in the handout
+    double eqv_i = 1;//the second term of the formula in the handout
+    
+    
 }

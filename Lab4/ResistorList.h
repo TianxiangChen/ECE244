@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   ResistorList.h
- * Author: tianxiangchen
+ * Author: Tianxiang Chen
  *
  * Created on August 23, 2017, 5:04 PM
  */
@@ -19,6 +13,7 @@
 #include <iomanip>
 #include "Resistor.h"
 #include "err_display.h"
+#include "NodeList.h"
 
 using namespace std;
 
@@ -32,8 +27,8 @@ public:
    ResistorList();
    ~ResistorList();
 
-   void Insert(string name_, double resistance_, int endpoint0, int endpoint1);
-   bool Delete(string name_);
+   void Insert(string name_, double resistance_, int endpoint0, int endpoint1, NodeList *nlist);
+   bool Delete(string name_, NodeList *nlist);
    bool Modify(string name_, double resistance_);
    bool Print(string name);
    Resistor *Find(string name_);

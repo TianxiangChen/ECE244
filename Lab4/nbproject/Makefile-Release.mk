@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux
+CND_PLATFORM=GNU-Linux-x86
 CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=dist
@@ -38,6 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Node.o \
 	${OBJECTDIR}/NodeList.o \
 	${OBJECTDIR}/Parser.o \
+	${OBJECTDIR}/ResAddr.o \
+	${OBJECTDIR}/ResAddrList.o \
 	${OBJECTDIR}/Resistor.o \
 	${OBJECTDIR}/ResistorList.o \
 	${OBJECTDIR}/err_display.o \
@@ -68,37 +70,47 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lab4: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lab4 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Node.o: Node.cpp
+${OBJECTDIR}/Node.o: Node.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Node.o Node.cpp
 
-${OBJECTDIR}/NodeList.o: NodeList.cpp
+${OBJECTDIR}/NodeList.o: NodeList.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NodeList.o NodeList.cpp
 
-${OBJECTDIR}/Parser.o: Parser.cpp
+${OBJECTDIR}/Parser.o: Parser.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Parser.o Parser.cpp
 
-${OBJECTDIR}/Resistor.o: Resistor.cpp
+${OBJECTDIR}/ResAddr.o: ResAddr.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ResAddr.o ResAddr.cpp
+
+${OBJECTDIR}/ResAddrList.o: ResAddrList.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ResAddrList.o ResAddrList.cpp
+
+${OBJECTDIR}/Resistor.o: Resistor.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Resistor.o Resistor.cpp
 
-${OBJECTDIR}/ResistorList.o: ResistorList.cpp
+${OBJECTDIR}/ResistorList.o: ResistorList.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ResistorList.o ResistorList.cpp
 
-${OBJECTDIR}/err_display.o: err_display.cpp
+${OBJECTDIR}/err_display.o: err_display.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/err_display.o err_display.cpp
 
-${OBJECTDIR}/main.o: main.cpp
+${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
@@ -109,6 +121,7 @@ ${OBJECTDIR}/main.o: main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lab4
 
 # Subprojects
 .clean-subprojects:

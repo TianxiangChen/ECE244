@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 #include "err_display.h"
 
 //Error Printing
@@ -36,4 +31,10 @@ void Print_Res_Not_Found(const string name){
 }
 void Print_Duplicate(const string name){
     cout<<"Error: resistor "<<name<<" already exists"<<endl;
+}
+void Print_NodeNotFound(const int nodeid){
+    cout<<"Node "<<nodeid<<" is not found"<<endl;
+}
+void Print_SolveNoSet(){
+    cout<<"Error: no nodes have their voltage set"<<endl;
 }

@@ -26,9 +26,24 @@ string Resistor::getName() const{// returns the name
 double Resistor::getResistance() const{// returns the resistance
     return(resistance);
 }
-   
+ 
+int Resistor::getNode1() const{
+    return endpointNodeIDs[0];
+}
+
+int Resistor::getNode2() const{
+    return endpointNodeIDs[1];
+}
+
 Resistor* Resistor::getNext() const{
     return next;
+}
+
+int Resistor::getTheOtherNode(int nodeid){
+    if(endpointNodeIDs[0] == nodeid)
+        return endpointNodeIDs[1];
+    else
+        return endpointNodeIDs[0];
 }
 
 void Resistor::setAll(string name_, double resistance_, int endpoints0, int endpoints1){

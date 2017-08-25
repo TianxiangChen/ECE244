@@ -33,6 +33,8 @@ void Print_TooManyArgu();
 void Print_ToofewArgu();
 void Print_Res_Not_Found(const string name);
 void Print_Duplicate(const string name);
+void Print_NodeNotFound(const int nodeid);
+void Print_SolveNoSet();
 
 #endif /* ERR_DISPLAY_H */
 
