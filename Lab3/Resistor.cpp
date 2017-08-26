@@ -53,7 +53,7 @@ void Resistor::print (){
 }
 
 ostream& operator<<(ostream& out,const Resistor& res){
-    cout<<left<<setw(20)<<res.name<<" "<<right<<setw(8)<<setprecision(2)
+    return out<<left<<setw(20)<<res.name<<" "<<right<<setw(8)<<setprecision(2)
             <<res.resistance<< " Ohms "<<res.endpointNodeIDs[0]<<" -> "
             <<res.endpointNodeIDs[1]<<endl;
 }
