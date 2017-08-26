@@ -1,0 +1,13 @@
+insert www.google.com 283983 active
+insert www.yahoo.com 191333 active
+insert www.eecg.utoronto.ca 179333 inactive
+insert www.altera.com 283299 active
+insert www.flickr.com 152478 inactive
+find www.yahoo.ca
+find www.yahoo.com
+updatestatus www.google.ca inactive
+updatestatus www.google.com inactive
+printall
+printprobes www.flickr.ca
+printprobes www.flickr.com
+countactive

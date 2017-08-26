@@ -62,6 +62,7 @@ void DBentry::print(){
 // prints the entry in the format 
 // name : IPaddress : active  followed by newline
 // active is printed as a string (active or inactive)
-ostream& operator<< (ostream& out, const DBentry& rhs){
-    return out<<rhs.getName()<<" : "<<rhs.getIPaddress()<<" :"<<rhs.getActive()<<endl;
+ostream& operator<< (ostream& out, DBentry *rhs){
+    if(rhs != NULL)
+        return out<<rhs->getName()<<" : "<<rhs->getIPaddress()<<" : "<<rhs->getActive_converted()<<endl;
 }

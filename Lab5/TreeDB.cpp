@@ -14,6 +14,7 @@ TreeDB::~TreeDB(){
     // Make a private function of class Tree.
     delTree (root);
     root = NULL;
+    active = 0;
     
 }
 
@@ -122,7 +123,7 @@ DBentry* TreeDB::find_in_bst(string name, TreeNode *curr){
             return NULL;
         }
         else
-            find_in_bst(name,curr->getLeft());
+            return find_in_bst(name,curr->getLeft());
     }
     else if(curr->getEntry()->getName() < name){//go right
         if(curr->getRight() == NULL){//nothing left
@@ -130,7 +131,7 @@ DBentry* TreeDB::find_in_bst(string name, TreeNode *curr){
             return NULL;
         }
         else
-            find_in_bst(name,curr->getRight());
+            return find_in_bst(name,curr->getRight());
     }
 }
 
@@ -140,6 +141,8 @@ bool TreeDB::remove(string name){
         return false;
     }
     else if (root->getEntry()->getName() == name){//delete root
+        if(root->getEntry()->getActive())//active minus one
+            active_minus_one();
         if(root->getLeft() == NULL && root->getRight() == NULL){//only root
             delete root;
             root = NULL;
@@ -165,6 +168,7 @@ bool TreeDB::remove(string name){
                 else
                     prev->setLeft(NULL);
                 TreeNode *temp = root;
+                curr->setRight(root->getRight());
                 root = curr;
                 delete temp;
                 temp = NULL;
@@ -175,6 +179,7 @@ bool TreeDB::remove(string name){
         else{//has left child
             if(root->getLeft()->getRight() == NULL){//left child has no right child
                 TreeNode *temp = root;
+                root->getLeft()->setRight(root->getRight());
                 root = root->getLeft();
                 delete temp;
                 temp = NULL;
@@ -191,7 +196,7 @@ bool TreeDB::remove(string name){
                 else
                     prev->setRight(NULL);
                 TreeNode *temp = root;
-                prev->setRight(NULL);
+                curr->setRight(root->getRight());
                 root = curr;
                 delete temp;
                 temp = NULL;
@@ -210,6 +215,8 @@ bool TreeDB::remove(string name){
 //a helper function for remove
 bool TreeDB::remove_in_bst(string name, TreeNode *prev, TreeNode *curr){
     if(curr->getEntry()->getName() == name){//found
+        if(curr->getEntry()->getActive())
+            active_minus_one();
         if(curr->getLeft() == NULL && curr->getRight() == NULL){//leaf
             if(prev->getEntry()->getName() > curr->getEntry()->getName())
                 prev->setLeft(NULL);
@@ -259,6 +266,7 @@ bool TreeDB::remove_in_bst(string name, TreeNode *prev, TreeNode *curr){
                     prev->setLeft(curr->getLeft());
                 else
                     prev->setRight(curr->getLeft());
+                curr->getLeft()->setRight(curr->getRight());
                 delete curr;
                 curr = NULL;
             }

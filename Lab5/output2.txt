@@ -1,0 +1,12 @@
+> Success
+> Success
+> Success
+> Success
+> Success
+> Error: entry already exists
+> www.altera.com : 3299 : active
+www.eecg.utoronto.ca : 179333 : inactive
+www.flickr.com : 52478 : inactive
+www.google.com : 283983 : active
+www.yahoo.com : 191333 : active
+> 

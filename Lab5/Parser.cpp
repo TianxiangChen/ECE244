@@ -68,7 +68,8 @@ void insert(stringstream &lineStream, TreeDB *tree){
 void find(stringstream &lineStream, TreeDB *tree){
     string name;
     lineStream >> name;
-    tree->find(name)->print();
+    cout<<tree->find(name);
+
 }
 
 void remove(stringstream &lineStream, TreeDB *tree){

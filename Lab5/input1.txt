@@ -1,0 +1,43 @@
+insert www.google.com 283983 active
+insert www.yahoo.com 191333 active
+insert www.eecg.utoronto.ca 179333 inactive
+insert www.altera.com 283299 active
+find www.google.com
+updatestatus www.google.com inactive
+printall
+printprobes www.altera.com
+remove www.eecg.utoronto.ca
+printprobes www.altera.com
+countactive
+printall
+removeall
+find www.google.com
+printall
+removeall
+insert www.google.com 283983 active
+insert www.google.com 283983 active
+insert www.yahoo.com 191333 active
+insert www.yahoo.com 191333 active
+insert www.eecg.utoronto.ca 179333 inactive
+insert www.eecg.utoronto.ca 179333 inactive
+insert http://www.eecg.toronto.edu/~tsa/ 17089422 inactive
+updatestatus www.google.com inactive
+countactive
+printprobes www.notasite.com
+printprobes www.eecg.utoronto.ca
+printall
+printall
+remove www.google.com
+remove www.google.com
+printall
+find www.notasite.com
+find www.yahoo.com
+removeall
+insert www.bca.com 1222222 active
+insert www.abc.com 2111111 inactive
+insert www.cba.com 3222222 active
+printprobes www.abc.com
+printall
+remove www.bca.com
+countactive
+printall

@@ -45,7 +45,7 @@ public:
         friend ostream& operator<< (ostream& out, const DBentry& rhs);
 };
 
-ostream& operator<< (ostream& out, const DBentry& rhs);
+ostream& operator<< (ostream& out, DBentry *rhs);
 
 #endif 
 

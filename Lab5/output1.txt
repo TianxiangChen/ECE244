@@ -1,0 +1,59 @@
+> Success
+> Success
+> Success
+> Success
+> www.google.com : 283983 : active
+> Success
+> www.altera.com : 283299 : active
+www.eecg.utoronto.ca : 179333 : inactive
+www.google.com : 283983 : inactive
+www.yahoo.com : 191333 : active
+> 3
+> Success
+> 2
+> 2
+> www.altera.com : 283299 : active
+www.google.com : 283983 : inactive
+www.yahoo.com : 191333 : active
+> Success
+> Error: entry does not exist
+> > Success
+> Success
+> Error: entry already exists
+> Success
+> Error: entry already exists
+> Success
+> Error: entry already exists
+> Success
+> Success
+> 1
+> Error: entry does not exist
+> 2
+> http://www.eecg.toronto.edu/~tsa/ : 17089422 : inactive
+www.eecg.utoronto.ca : 179333 : inactive
+www.google.com : 283983 : inactive
+www.yahoo.com : 191333 : active
+> http://www.eecg.toronto.edu/~tsa/ : 17089422 : inactive
+www.eecg.utoronto.ca : 179333 : inactive
+www.google.com : 283983 : inactive
+www.yahoo.com : 191333 : active
+> Success
+> Error: entry does not exist
+> http://www.eecg.toronto.edu/~tsa/ : 17089422 : inactive
+www.eecg.utoronto.ca : 179333 : inactive
+www.yahoo.com : 191333 : active
+> Error: entry does not exist
+> www.yahoo.com : 191333 : active
+> Success
+> Success
+> Success
+> Success
+> 2
+> www.abc.com : 2111111 : inactive
+www.bca.com : 1222222 : active
+www.cba.com : 3222222 : active
+> Success
+> 1
+> www.abc.com : 2111111 : inactive
+www.cba.com : 3222222 : active
+> 

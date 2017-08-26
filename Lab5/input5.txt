@@ -1,0 +1,16 @@
+insert www.doodle.com 283983 active
+insert www.bing.com 191333 active
+insert www.amazon.com 179333 inactive
+insert www.cnn.com 283299 active
+printprobes www.bing.com
+printprobes www.amazon.com
+printprobes www.cnn.com
+printall
+remove www.bing.com
+printprobes www.amazon.com
+printprobes www.cnn.com
+remove www.amazon.com
+printprobes www.cnn.com
+printall
+remove www.cnn.com
+printall

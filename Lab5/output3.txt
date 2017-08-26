@@ -1,0 +1,18 @@
+> Success
+> Success
+> Success
+> Success
+> Success
+> Error: entry does not exist
+> www.yahoo.com : 191333 : active
+> Error: entry does not exist
+> Success
+> www.altera.com : 283299 : active
+www.eecg.utoronto.ca : 179333 : inactive
+www.flickr.com : 152478 : inactive
+www.google.com : 283983 : inactive
+www.yahoo.com : 191333 : active
+> Error: entry does not exist
+> 3
+> 2
+> 
