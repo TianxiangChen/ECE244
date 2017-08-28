@@ -76,16 +76,16 @@ void insertR(stringstream &lineStream, Node *node, Resistor *res, int &res_index
         Print_Array_Full();
         return;
     }
-    if((node[nodeid1].getResNum()== MAX_RESISTORS_PER_NODE) ||
-            (node[nodeid2].getResNum()== MAX_RESISTORS_PER_NODE)){
+    if((node[nodeid1].getResNum()>= MAX_RESISTORS_PER_NODE) ||
+            (node[nodeid2].getResNum()>= MAX_RESISTORS_PER_NODE)){
         Print_Node_Full();
         return;
     }
-    if(nodeid1 > MaxNodeNumber - 1 ){
+    if(nodeid1 > MaxNodeNumber){
         Print_NodeExceed(nodeid1, MaxNodeNumber);
         return;
     }
-    if(nodeid2 > MaxNodeNumber - 1 ){
+    if(nodeid2 > MaxNodeNumber){
         Print_NodeExceed(nodeid2, MaxNodeNumber);
         return;
     }
@@ -111,7 +111,7 @@ void insertR(stringstream &lineStream, Node *node, Resistor *res, int &res_index
 
 void modifyR(stringstream &lineStream, Resistor *res, int res_index){
     string name;
-    double resistance;
+    double resistance,old_resistance;
     
     if (TooFewArguChecking(lineStream))
         return;
@@ -125,15 +125,16 @@ void modifyR(stringstream &lineStream, Resistor *res, int res_index){
     bool IsFound = false;
     for(int i=0;i<res_index;i++){
             if(res[i].getName()==name){
+                old_resistance = res[i].getResistance();
                 res[i].setResistance(resistance);
                 IsFound = true;
             }
     }
     if(IsFound)
-    cout<<"Modified: resistor "<<name<<" to "<<setprecision(2)<<std::fixed
-            <<resistance<<" Ohms"<<endl;
+    cout<<"Modified: resistor "<<name<<" from "<<old_resistance<<setprecision(2)<<std::fixed
+            <<" Ohms to "<<setprecision(2)<<std::fixed<<resistance<<" Ohms"<<endl;
     else
-        Print_Res_Not_Found();
+        Print_Res_Not_Found(name);
 }
 
 void printR(stringstream &lineStream, Resistor *res, int res_index){
@@ -160,7 +161,7 @@ void printR(stringstream &lineStream, Resistor *res, int res_index){
             }
         }
         if(!IsFound)
-            Print_Res_Not_Found();
+            Print_Res_Not_Found(name);
     }
 }
 
@@ -175,29 +176,21 @@ void printNode(stringstream &lineStream, Resistor *res, Node *node,
     
     if(name == "all"){
         cout<<"Print:"<<endl;
-        for(int i=0; i<MaxNodeNumber;i++){
+        for(int i=0; i<MaxNodeNumber+1;i++){
             if(node[i].getResNum()>0){
                 node[i].printNode(i,res);
-//                cout<<"Connections at node "<<i<<": "<<node[i].getResNum()
-//                        <<" resistor(s)"<<endl;
-//                for(int j=0; j<node[i].getResNum();j++){
-//                    cout<<"  "<<(cout,res[node[i].getIndex(j)]);
                 }
-            
             else
-                cout<<"Print:"<<endl<<"Connections at node "<<i
-                        <<": 0 resistor(s)"<<endl; 
+                cout<<"Connections at node "<<i<<": 0 resistor(s)"<<endl; 
         }
     }
     else{
-        cout<<"Connections at node "<<nodeid<<": "<<node[nodeid].getResNum()
-                        <<" resistor(s)"<<endl;
+        cout<<"Print:"<<endl;
         if(node[nodeid].getResNum()>0){
-            for(int i=0; i<node[nodeid].getResNum();i++){
-                node[i].printNode(i,res);
-//                cout<<"  "<<(cout,res[node[nodeid].getIndex(i)]);
-                }
+            node[nodeid].printNode(nodeid,res);       
         }
+        else
+            cout<<"Connections at node "<<nodeid<<": 0 resistor(s)"<<endl;
     }
 }
 
@@ -214,7 +207,7 @@ void deleteR(stringstream &lineStream, Resistor *&res, Node *&node,
         delete []node;
         res=NULL;
         node=NULL;
-        node=new Node[MaxNodeNumber];
+        node=new Node[MaxNodeNumber+1];
         res=new Resistor[MaxResistors];
         res_index = 0;
         cout<<"Deleted: all resistors"<<endl;
@@ -225,9 +218,11 @@ void deleteR(stringstream &lineStream, Resistor *&res, Node *&node,
 
 void maxVal(stringstream &lineStream,Node *&node, Resistor *&res, int &MaxNodeNumber
 , int &MaxResistors, int &res_index){
-    if(!NodeNumChecking(lineStream, MaxNodeNumber))
-        return;
-    if(!ResNumChecking(lineStream, MaxResistors))
+//    if(!NodeNumChecking(lineStream, MaxNodeNumber))
+//        return;
+//    if(!ResNumChecking(lineStream, MaxResistors))
+//        return;
+    if(!maxValNumCheching(lineStream, MaxNodeNumber, MaxResistors))
         return;
     if(TooManyArguChecking(lineStream))
         return;
@@ -236,7 +231,7 @@ void maxVal(stringstream &lineStream,Node *&node, Resistor *&res, int &MaxNodeNu
     res=NULL;
     node=NULL;
     res_index = 0;
-    node=new Node[MaxNodeNumber];
+    node=new Node[MaxNodeNumber+1];
     res=new Resistor[MaxResistors];
     cout<<"New network: max node number is "<<MaxNodeNumber<<"; max resistors is "
             <<MaxResistors<<endl;
@@ -357,8 +352,8 @@ bool NodeChecking(stringstream &lineStream, int &nodeid, const int MaxNodeNumber
         Print_InvalidArgu();
         return false;
     }
-    else if(nodeid<LowBound || nodeid>MaxNodeNumber-1){
-        Print_NodeExceed(nodeid, MaxNodeNumber-1);
+    else if(nodeid<LowBound || nodeid>MaxNodeNumber){
+        Print_NodeExceed(nodeid, MaxNodeNumber);
         return false;
     }
     else if (TooFewArguChecking(lineStream)){
@@ -378,7 +373,7 @@ bool Node2Checking(stringstream &lineStream, int &nodeid1, int &nodeid2,
         Print_InvalidArgu();
         return false;
     }
-    else if(nodeid2<LowBound || nodeid2>MaxNodeNumber-1){
+    else if(nodeid2<LowBound || nodeid2>MaxNodeNumber){
         Print_NodeExceed(nodeid2, MaxNodeNumber);
         return false;
     }
@@ -389,8 +384,10 @@ bool Node2Checking(stringstream &lineStream, int &nodeid1, int &nodeid2,
     return true;
 }
 
-bool NodeNumChecking(stringstream &lineStream, int &num){
-    lineStream >> num;
+bool maxValNumCheching(stringstream &lineStream, int &MaxNodeNumber, int &MaxResistors){
+    int num_temp, num_temp2;
+    //checking NodeNum
+    lineStream >> num_temp;
     if(lineStream.fail()){
         Print_InvalidArgu();
         return false;
@@ -399,17 +396,58 @@ bool NodeNumChecking(stringstream &lineStream, int &num){
         Print_InvalidArgu();
         return false;
     }
-    else if(num <= 0){
+    else if(num_temp <= 0){
         Print_NegMaxVal();
         return false;
     }
     else if (TooFewArguChecking(lineStream)){
         return false;
     }
+    
+    //checking ResNum
+    lineStream >> num_temp2;
+    if(lineStream.fail()){
+        Print_InvalidArgu();
+        return false;
+    }
+    else if( lineStream.peek()!=' ' && !lineStream.eof()){
+        Print_InvalidArgu();
+        return false;
+    }
+    else if(num_temp2 <= 0){
+        Print_NegMaxVal();
+        return false;
+    }
+    MaxNodeNumber = num_temp;
+    MaxResistors = num_temp2;
     return true;
 }
 
+//bool NodeNumChecking(stringstream &lineStream, int &num){
+//    int old_num = num;
+//    lineStream >> num;
+//    if(lineStream.fail()){
+//        Print_InvalidArgu();
+//        return false;
+//    }
+//    else if( lineStream.peek()!=' ' && !lineStream.eof()){
+//        Print_InvalidArgu();
+//        return false;
+//    }
+//    else if(num <= 0){
+//        Print_NegMaxVal();
+//        num = old_num;
+//        cout<<"num: "<<num<<endl;
+//        return false;
+//    }
+//    else if (TooFewArguChecking(lineStream)){
+//        return false;
+//    }
+//    return true;
+//}
+
 bool ResNumChecking(stringstream &lineStream, int &num){
+    int old_num = num;
     lineStream >> num;
     if(lineStream.fail()){
         Print_InvalidArgu();
@@ -421,6 +459,7 @@ bool ResNumChecking(stringstream &lineStream, int &num){
     }
     else if(num <= 0){
         Print_NegMaxVal();
+        num = old_num;
         return false;
     }
     return true;
@@ -470,7 +509,7 @@ void Print_NegRes(){
 }
 void Print_NodeExceed(const int nodeid, const int MaxNodeNumber){
     cout<<"Error: node "<<nodeid<<" is out of permitted range "<<LowBound<<
-            "-"<<MaxNodeNumber-1<<endl;
+            "-"<<MaxNodeNumber<<endl;
 }
 void Print_NoAll(){
     cout<<"Error: resistor name cannot be the keyword \"all\""<<endl;
@@ -493,8 +532,8 @@ void Print_Array_Full(){
 void Print_Node_Full(){
     cout<<"Error: node is full"<<endl;
 }
-void Print_Res_Not_Found(){
-    cout<<"Error: resistor name not found"<<endl;
+void Print_Res_Not_Found(string name){
+    cout<<"Error: resistor "<<name<<" not found"<<endl;
 }
 void Print_Duplicate(string name){
     cout<<"Error: resistor "<<name<<" already exists"<<endl;

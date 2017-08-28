@@ -1,0 +1,51 @@
+maxVal 0 1
+maxVal 6 7
+insertR R0 100.1 0 1
+insertR R0 333.33 0 2
+insertR R1 110.001 0 2
+insertR R2 120 0 3
+insertR R3 130 0 4
+insertR R4 140 0 5
+insertR R5 150 0 6
+insertR R6 160 1 7
+insertR R7 170 1 5
+insertR R8 180 4 3
+insertR R9 190 2 4
+printR R8
+printR R9
+printR all
+printNode 1
+printNode all
+modifyR R3 2.5
+printR R3
+maxVal 3 4
+printNode all
+insertR bigres 1000 2 3
+insertR smallres 0.05 2 4
+printR all
+deleteR all
+printR all
+maxVal 10 10
+maxVal 8 8
+insertR del 15.000005 1 2
+insertR del2 15 2 7
+deleteR all
+deleteR all
+printR all
+printNode all
+maxVal 3 3
+printR all
+printNode all
+deleteR all
+insertR a 25 1 1
+insertR a 25 0 1
+insertR b 10.5 0 1
+deleteR all
+deleteR all
+printNode all
+printR all
+maxVal 0 10
+maxVal 10 0
+deleteR all
+printR all
+printNode all

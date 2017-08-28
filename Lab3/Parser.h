@@ -47,8 +47,9 @@ bool ResChecking2(stringstream &lineStream, double &resistance);//For modifyR
 bool NodeChecking(stringstream &lineStream, int &nodeid, const int MaxNodeNumber);
 bool Node2Checking(stringstream &lineStream, int &nodeid1, int &nodeid2,
         const int MaxNodeNumber);
-bool NodeNumChecking(stringstream &lineStream, int &num);//For maxVal
-bool ResNumChecking(stringstream &lineStream, int &num);//For maxVal
+bool maxValNumCheching(stringstream &lineStream, int &MaxNodeNumber, int &MaxResistors);
+//bool NodeNumChecking(stringstream &lineStream, int &num);//For maxVal
+//bool ResNumChecking(stringstream &lineStream, int &num);//For maxVal
 bool TooFewArguChecking(stringstream &lineStream);
 bool TooManyArguChecking(stringstream &lineStream);
 
@@ -65,7 +66,7 @@ void Print_ToofewArgu();
 void Print_NegMaxVal();
 void Print_Array_Full();
 void Print_Node_Full();
-void Print_Res_Not_Found();
+void Print_Res_Not_Found(string name);
 void Print_Duplicate(string name);
 
 int Parser();
