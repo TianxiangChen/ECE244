@@ -134,7 +134,7 @@ DBentry* TreeDB::find_in_bst(string name, TreeNode *curr){
             return find_in_bst(name,curr->getRight());
     }
 }
-
+/*
 bool TreeDB::remove(string name){
     if(root == NULL){
         cout<<"Error: entry does not exist"<<endl;
@@ -210,7 +210,69 @@ bool TreeDB::remove(string name){
         TreeNode *curr = root;
         remove_in_bst(name,prev,curr);
     }
+}*/
+bool TreeDB::remove(string name){
+    if(root == NULL){
+        cout<<"Error: entry does not exist"<<endl;
+        return false;
+    }
+    else if (root->getEntry()->getName() == name){//delete root
+        if(root->getEntry()->getActive())//active minus one
+            active_minus_one();
+        if(root->getLeft() == NULL && root->getRight() == NULL){//only root
+            delete root;
+            root = NULL;
+            cout<<"Success"<<endl;
+            return true;
+        }
+        else if(root->getLeft() == NULL){//no left child, use right
+            TreeNode *temp = root;
+            root = root->getRight();
+            delete temp;
+            temp = NULL;
+        }
+        else if(root->getRight() == NULL){//no right child, use left
+            TreeNode *temp = root;
+            root = root->getLeft();
+            delete temp;
+            temp = NULL;
+        }
+        else{//both right and left
+            if(root->getLeft()->getRight() == NULL){//left child has no right child
+                TreeNode *temp = root;
+                root->getLeft()->setRight(root->getRight());
+                root = root->getLeft();
+                delete temp;
+                temp = NULL;
+            }
+            else{//left child has right child
+                TreeNode *prev = root->getLeft();
+                TreeNode *curr = root->getLeft()->getRight();
+                while(curr->getRight() != NULL){
+                    prev = curr;
+                    curr = curr->getRight();
+                }//found left's rightmost child at curr
+                if(curr->getLeft() != NULL)
+                    prev->setRight(curr->getRight());
+                else
+                    prev->setRight(NULL);
+                TreeNode *temp = root;
+                curr->setRight(root->getRight());
+                root = curr;
+                delete temp;
+                temp = NULL;
+            }
+            cout<<"Success"<<endl;
+            return true;
+        }
+    }
+    else{
+        TreeNode *prev = NULL;
+        TreeNode *curr = root;
+        remove_in_bst(name,prev,curr);
+    }
 }
+
 
 //a helper function for remove
 bool TreeDB::remove_in_bst(string name, TreeNode *prev, TreeNode *curr){
@@ -225,58 +287,43 @@ bool TreeDB::remove_in_bst(string name, TreeNode *prev, TreeNode *curr){
             delete curr;
             curr = NULL;
         }
-        else if(curr->getLeft() == NULL){//no left child,find right's leftmost child
-            if(curr->getRight()->getLeft() == NULL){//right has no left child
-                if(prev->getEntry()->getName() > curr->getEntry()->getName())
-                    prev->setLeft(curr->getRight());
-                else
-                    prev->setRight(curr->getRight());
-                delete curr;
-                curr = NULL;           
-            }
-            else{//right has left child
-                TreeNode *prev_temp = curr;
-                TreeNode *curr_temp = curr->getLeft();
-                while(curr_temp->getLeft() != NULL){
-                    curr_temp = prev_temp;
-                    curr_temp = curr_temp->getLeft();
-                }//found right's leftmost child at curr
-                if(curr_temp->getRight() == NULL)
-                    prev_temp->setLeft(NULL);
-                else//right's leftmost one has a right child
-                prev_temp->setLeft(curr_temp->getRight());
+        else if(curr->getLeft() == NULL){//no left child, use right child
+            if(prev->getEntry()->getName() > curr->getEntry()->getName())
+                prev->setLeft(curr->getRight());
+            else
+                prev->setRight(curr->getRight());
+            delete curr;
+            curr = NULL;           
+        }
+        else if(curr->getRight() == NULL){//no right child, use left child
+            if(prev->getEntry()->getName() > curr->getEntry()->getName())
+                prev->setLeft(curr->getLeft());
+            else
+                prev->setRight(curr->getLeft());
+            delete curr;
+            curr = NULL; 
+        }
+        else{//has left child and right child
+            if(curr->getLeft()->getRight() == NULL){//left child has no right child
                 if(prev->getEntry()->getName() > curr->getEntry()->getName()){
-                    prev->setLeft(curr_temp);
-                    curr_temp->setLeft(curr->getLeft());
-                    curr_temp->setRight(curr->getRight());
+                    prev->setLeft(curr->getLeft());
+                    curr->getLeft()->setRight(curr->getRight());
                 }
                 else{
-                    prev->setRight(curr_temp);
-                    curr_temp->setLeft(curr->getLeft());
-                    curr_temp->setRight(curr->getRight());
+                    prev->setRight(curr->getRight());
+                    curr->getLeft()->setLeft(curr->getLeft());
                 }
                 delete curr;
                 curr = NULL;
             }
-        }
-    
-        else{//has left child
-            if(curr->getLeft()->getRight() == NULL){//left has no right child
-                if(prev->getEntry()->getName() > curr->getEntry()->getName())
-                    prev->setLeft(curr->getLeft());
-                else
-                    prev->setRight(curr->getLeft());
-                curr->getLeft()->setRight(curr->getRight());
-                delete curr;
-                curr = NULL;
-            }
-            else{//left has right child
+            else
+            {
                 TreeNode *prev_temp = curr;
-                TreeNode *curr_temp = curr->getRight();
+                TreeNode *curr_temp = curr->getLeft();
                 while(curr_temp->getRight() != NULL){
                     curr_temp = prev_temp;
                     curr_temp = curr_temp->getRight();
-                }//found left's rightmost child at curr
+                }//found left's rightmost child at curr_temp
                 if(curr_temp->getLeft() == NULL)
                     prev_temp->setRight(NULL);
                 else//right's leftmost one has a right child
