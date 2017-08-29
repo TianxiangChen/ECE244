@@ -1,0 +1,129 @@
+> Inserted: resistor R1 100.00 Ohms 6 -> 5
+> Inserted: resistor R2 100.00 Ohms 5 -> 2
+> Inserted: resistor R3 200.00 Ohms 5 -> 3
+> Inserted: resistor R4 150.00 Ohms 2 -> 3
+> Inserted: resistor R5 120.00 Ohms 3 -> 4
+> Error: no nodes have their voltage set
+> Set: node 6 to 1.00 Volts
+> Set: node 4 to -0.60 Volts
+> Solve:
+  Node 2: 0.30 V
+  Node 3: -0.02 V
+  Node 4: -0.60 V
+  Node 5: 0.52 V
+  Node 6: 1.00 V
+> Unset: the solver will determine the voltage of node 4
+> Solve:
+  Node 2: 1.00 V
+  Node 3: 1.00 V
+  Node 4: 1.00 V
+  Node 5: 1.00 V
+  Node 6: 1.00 V
+> Set: node 4 to -0.60 Volts
+> Modified: resistor R5 from 120.00 Ohms to 1000.00 Ohms
+> Solve:
+  Node 2: 0.81 V
+  Node 3: 0.72 V
+  Node 4: -0.60 V
+  Node 5: 0.87 V
+  Node 6: 1.00 V
+> Print:
+R5                    1000.00 Ohms 3 -> 4
+> Print:
+Connections at node 2: 2 resistor(s)
+  R2                     100.00 Ohms 5 -> 2
+  R4                     150.00 Ohms 2 -> 3
+> Deleted: resistor R2
+> Print:
+Connections at node 2: 1 resistor(s)
+  R4                     150.00 Ohms 2 -> 3
+Connections at node 3: 3 resistor(s)
+  R3                     200.00 Ohms 5 -> 3
+  R4                     150.00 Ohms 2 -> 3
+  R5                    1000.00 Ohms 3 -> 4
+Connections at node 4: 1 resistor(s)
+  R5                    1000.00 Ohms 3 -> 4
+Connections at node 5: 2 resistor(s)
+  R1                     100.00 Ohms 6 -> 5
+  R3                     200.00 Ohms 5 -> 3
+Connections at node 6: 1 resistor(s)
+  R1                     100.00 Ohms 6 -> 5
+> Deleted: all resistors
+> Print:
+> Unset: the solver will determine the voltage of node 1000
+> Error: no nodes have their voltage set
+> Inserted: resistor Rnew 100.00 Ohms -5000 -> 3333
+> Error: resistor RINeverCreated not found
+> Error: resistor Rnew already exists
+> Deleted: all resistors
+> Unset: the solver will determine the voltage of node 4
+> Unset: the solver will determine the voltage of node 6
+> Set: node 6 to 1.00 Volts
+> Set: node 4 to -0.60 Volts
+> Inserted: resistor A 100.00 Ohms 6 -> 5
+> Inserted: resistor B 200.00 Ohms 5 -> 3
+> Inserted: resistor C 100.00 Ohms 5 -> 2
+> Inserted: resistor D 150.00 Ohms 2 -> 3
+> Inserted: resistor E 120.00 Ohms 3 -> 4
+> Deleted: all resistors
+> Inserted: resistor A 100.00 Ohms 6 -> 5
+> Inserted: resistor B 200.00 Ohms 5 -> 3
+> Inserted: resistor C 100.00 Ohms 5 -> 2
+> Inserted: resistor D 150.00 Ohms 2 -> 3
+> Inserted: resistor E 120.00 Ohms 3 -> 4
+> Solve:
+  Node 2: 0.30 V
+  Node 3: -0.02 V
+  Node 4: -0.60 V
+  Node 5: 0.52 V
+  Node 6: 1.00 V
+> Unset: the solver will determine the voltage of node 4
+> Deleted: all resistors
+> Inserted: resistor a 1.00 Ohms 4 -> 3
+> Inserted: resistor b 10.00 Ohms 1 -> 0
+> Inserted: resistor c 4.00 Ohms 2 -> 5
+> Print:
+Connections at node 0: 1 resistor(s)
+  b                       10.00 Ohms 1 -> 0
+> Print:
+Connections at node 1: 1 resistor(s)
+  b                       10.00 Ohms 1 -> 0
+> Print:
+Connections at node 2: 1 resistor(s)
+  c                        4.00 Ohms 2 -> 5
+> Print:
+Connections at node 3: 1 resistor(s)
+  a                        1.00 Ohms 4 -> 3
+> Print:
+Connections at node 4: 1 resistor(s)
+  a                        1.00 Ohms 4 -> 3
+> Print:
+Connections at node 5: 1 resistor(s)
+  c                        4.00 Ohms 2 -> 5
+> Print:
+a                        1.00 Ohms 4 -> 3
+> Print:
+b                       10.00 Ohms 1 -> 0
+> Print:
+c                        4.00 Ohms 2 -> 5
+> Error: resistor exist not found
+> Deleted: resistor a
+> Print:
+Connections at node 0: 1 resistor(s)
+  b                       10.00 Ohms 1 -> 0
+Connections at node 1: 1 resistor(s)
+  b                       10.00 Ohms 1 -> 0
+Connections at node 2: 1 resistor(s)
+  c                        4.00 Ohms 2 -> 5
+Connections at node 5: 1 resistor(s)
+  c                        4.00 Ohms 2 -> 5
+> Deleted: resistor b
+> Print:
+Connections at node 2: 1 resistor(s)
+  c                        4.00 Ohms 2 -> 5
+Connections at node 5: 1 resistor(s)
+  c                        4.00 Ohms 2 -> 5
+> Deleted: all resistors
+> Print:
+> Error: resistor c not found
+> 

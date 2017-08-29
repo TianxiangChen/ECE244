@@ -1,0 +1,36 @@
+> Print:
+> Inserted: resistor r0 100.00 Ohms 0 -> 1
+> Inserted: resistor r1 50.00 Ohms 0 -> 5
+> Inserted: resistor r2 25.00 Ohms 1 -> 5
+> Inserted: resistor r3 12.50 Ohms -1 -> 0
+> Inserted: resistor r4 6.25 Ohms -1 -> 1
+> Inserted: resistor r5 3.00 Ohms -1 -> 5
+> Print:
+Connections at node -1: 3 resistor(s)
+  r3                      12.50 Ohms -1 -> 0
+  r4                       6.25 Ohms -1 -> 1
+  r5                       3.00 Ohms -1 -> 5
+Connections at node 0: 3 resistor(s)
+  r0                     100.00 Ohms 0 -> 1
+  r1                      50.00 Ohms 0 -> 5
+  r3                      12.50 Ohms -1 -> 0
+Connections at node 1: 3 resistor(s)
+  r0                     100.00 Ohms 0 -> 1
+  r2                      25.00 Ohms 1 -> 5
+  r4                       6.25 Ohms -1 -> 1
+Connections at node 5: 3 resistor(s)
+  r1                      50.00 Ohms 0 -> 5
+  r2                      25.00 Ohms 1 -> 5
+  r5                       3.00 Ohms -1 -> 5
+> Modified: resistor r5 from 3.00 Ohms to 3.12 Ohms
+> Print:
+r5                       3.12 Ohms -1 -> 5
+> Print:
+Connections at node 5: 3 resistor(s)
+  r1                      50.00 Ohms 0 -> 5
+  r2                      25.00 Ohms 1 -> 5
+  r5                       3.12 Ohms -1 -> 5
+> Set: node 0 to 6.12 Volts
+> Unset: the solver will determine the voltage of node 0
+> Deleted: all resistors
+> 

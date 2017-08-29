@@ -30,6 +30,7 @@ public:
    Resistor* getResAddr() const;
    ResAddr* getNext() const;
    void setNext(ResAddr *next_);
+   void setAddr(Resistor *Addr_);
 };
 
 

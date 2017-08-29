@@ -16,7 +16,7 @@ Resistor::Resistor(){
 }
 
 Resistor::~Resistor(){
-    ;
+    next = NULL;
 }
 
 string Resistor::getName() const{// returns the name

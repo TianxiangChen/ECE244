@@ -48,12 +48,14 @@ public:
    void deleteRes(Resistor *addr);
    void setNext(Node *next_);
    void setSet();
+   void setUnset();
    void setVoltage(double voltage_);
    void unsetVoltage();
+   void setResNum(int num);
    void setConverge();
    void setDiverge();
    void printNode();
-   void voltage_cal();
+   void clear();
 };
 
 #endif	/* NODE_H */

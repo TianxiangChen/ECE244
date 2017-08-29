@@ -50,7 +50,9 @@ void ResistorList::Insert(string name_, double resistance_, int endpoint0,
 bool ResistorList::Delete(string name_, NodeList *nlist){
     if(name_ == "all"){
         //All resistors cleared and Node array updated so we have an empty network
-        delete this;
+        //nlist->~NodeList();//clear the nodelist first
+        nlist->DeleteAll();
+        this->~ResistorList();
         cout<<"Deleted: all resistors"<<endl;
         return true;
     }
@@ -90,9 +92,11 @@ bool ResistorList::Modify(string name_, double resistance_){
         return false;
     }
     else{
+        double old_resistance = temp->getResistance();
         temp->setResistance(resistance_);
-        cout<<"Modified: resistor "<<name_<<" to "<<setprecision(2)<<std::fixed
-            <<resistance_<<" Ohms"<<endl;
+        cout<<"Modified: resistor "<<name_<<" from "<<setprecision(2)<<fixed
+                <<old_resistance<<" Ohms to "<<setprecision(2)<<fixed<<resistance_
+                <<" Ohms"<<endl;
         return true;
     }
 }

@@ -1,0 +1,64 @@
+insertR R1 100 6 5
+insertR R2 100 5 2
+insertR R3 200 5 3
+insertR R4 150 2 3
+insertR R5 120 3 4
+solve
+setV 6 1
+setV 4 -0.6
+solve
+unsetV 4
+solve
+setV 4 -0.6
+modifyR R5 1000
+solve
+printR R5
+printNode 2
+deleteR R2
+printNode all
+deleteR all
+printNode all
+unsetV 1000
+solve
+insertR Rnew 100 -5000 3333
+deleteR RINeverCreated
+insertR Rnew 240 2 4
+deleteR all
+unsetV 4
+unsetV 6
+setV 6 1
+setV 4 -0.6
+insertR A 100 6 5
+insertR B 200 5 3
+insertR C 100 5 2
+insertR D 150 2 3
+insertR E 120 3 4
+deleteR all
+insertR A 100 6 5
+insertR B 200 5 3
+insertR C 100 5 2
+insertR D 150 2 3
+insertR E 120 3 4
+solve
+unsetV 4
+deleteR all
+insertR a 1 4 3
+insertR b 10 1 0
+insertR c 4 2 5
+printNode 0
+printNode 1
+printNode 2
+printNode 3
+printNode 4
+printNode 5
+printR a
+printR b
+printR c
+printR exist
+deleteR a 
+printNode all
+deleteR b
+printNode all
+deleteR all
+printNode all
+printR c

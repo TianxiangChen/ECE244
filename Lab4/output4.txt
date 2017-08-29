@@ -1,0 +1,10 @@
+> Set: node 0 to 5.00 Volts
+> Print:
+> Unset: the solver will determine the voltage of node 0
+> Inserted: resistor r0 100.00 Ohms 0 -> 1
+> Error: resistor r0 already exists
+> Error: resistor r6 not found
+> Error: resistor r7 not found
+> Error: resistor r8 not found
+> Error: no nodes have their voltage set
+> 

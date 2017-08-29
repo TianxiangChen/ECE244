@@ -1,0 +1,14 @@
+printNode all
+insertR r0 100 0 1
+insertR r1 50 0 5
+insertR r2 25 1 5
+insertR r3 12.5 -1 0
+insertR r4 6.25 -1 1
+insertR r5 3 -1 5
+printNode all
+modifyR r5 3.125
+printR r5
+printNode 5
+setV 0 6.125
+unsetV 0
+deleteR all

@@ -10,12 +10,11 @@ Node::Node(){
 }
 
 Node::~Node(){
-    numRes = 0;
-    next = NULL;
     if(head != NULL){
-        head->~ResAddrList();
         delete head;
     }
+    numRes = 0;
+    next = NULL;
     head = NULL;
     set = false;
     voltage = 0;
@@ -26,10 +25,14 @@ Node::Node(int ID_, Resistor *addr){
     ID = ID_;
     numRes = 1;
     next = NULL;
-    if(head==NULL){
-        head = new ResAddrList;
+    if(addr != NULL){
+        if(head==NULL){ 
+            head = new ResAddrList;
+        }
+        head->Insert(addr);
     }
-    head->Insert(addr);
+    else
+        head = NULL;
 }
 
 
@@ -72,12 +75,19 @@ void Node::addResNum(){
 
 void Node::addRes(Resistor *addr){
     numRes++;
+    if(head==NULL){
+        head = new ResAddrList;
+    }
     head->Insert(addr);
 }
 
 void Node::deleteRes(Resistor *addr){
     if(head->Delete(addr));
         numRes--;
+}
+
+void Node::setResNum(int num){
+    numRes = num;
 }
 
 void Node::setNext(Node* next_){
@@ -88,10 +98,14 @@ void Node::setSet(){
     set = true;
 }
 
+void Node::setUnset(){
+    set = false;
+}
+
 void Node::setVoltage(double voltage_){
     voltage = voltage_;
 }
-   
+
 void Node::unsetVoltage(){
     voltage = 0;
     set = false;
@@ -107,15 +121,17 @@ void Node::setDiverge(){
 }
 
 void Node::printNode(){
-    cout<<"Connections at node "<<ID<<": "<<numRes<<" resistor(s)"<<endl;
+    //cout<<"Connections at node "<<ID<<": "<<numRes<<" resistor(s)"<<endl;
     if(numRes == 0)
         return;
+    cout<<"Connections at node "<<ID<<": "<<numRes<<" resistor(s)"<<endl;
     head->Print();
 }
 
-void Node::voltage_cal(){
-    double eqv_r = 1;//the first term of the formula in the handout
-    double eqv_i = 1;//the second term of the formula in the handout
-    
-    
+void Node::clear(){
+    if(head != NULL){
+        delete head;
+    }
+    numRes = 0;
+    head = NULL;
 }

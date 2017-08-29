@@ -265,10 +265,6 @@ bool NodeChecking(stringstream &lineStream, int &nodeid){
         Print_InvalidArgu();
         return false;
     }
-    else if(nodeid<LowBound){
-        Print_NodeExceed(nodeid);
-        return false;
-    }
     else if (TooFewArguChecking(lineStream)){
         return false;
     }
@@ -283,10 +279,6 @@ bool Node2Checking(stringstream &lineStream, int &nodeid1, int &nodeid2){
     }
     else if( lineStream.peek()!=' ' && !lineStream.eof()){
         Print_InvalidArgu();
-        return false;
-    }
-    else if(nodeid2<LowBound){
-        Print_NodeExceed(nodeid2);
         return false;
     }
     else if(nodeid1 == nodeid2){
@@ -304,10 +296,6 @@ bool NodeChecking3(stringstream &lineStream, int &nodeid){
     }
     else if( lineStream.peek()!=' ' && !lineStream.eof()){
         Print_InvalidArgu();
-        return false;
-    }
-    else if(nodeid<LowBound){
-        Print_NodeExceed(nodeid);
         return false;
     }
     return true;

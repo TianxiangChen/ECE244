@@ -1,0 +1,9 @@
+setV 0 5
+printNode all
+unsetV 0
+insertR r0 100 0 1
+insertR r0 200 0 2
+modifyR r6 10000
+printR r7
+deleteR r8
+solve
