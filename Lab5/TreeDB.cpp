@@ -3,7 +3,6 @@
 // the default constructor, creates an empty database.
 TreeDB::TreeDB(){
     root = NULL;
-    active = 0;
 }
 
 // the destructor, deletes all the entries in the database.
@@ -14,7 +13,6 @@ TreeDB::~TreeDB(){
     // Make a private function of class Tree.
     delTree (root);
     root = NULL;
-    active = 0;
     
 }
 
@@ -33,14 +31,6 @@ void TreeDB::delTree (TreeNode *st_root){
 void TreeDB::clear(){
     this->~TreeDB();
     cout<<"Success"<<endl;
-}
-
-void TreeDB::active_plus_one(){
-    active++;
-}
-
-void TreeDB::active_minus_one(){
-    active--;
 }
 
 void TreeDB::printall(){
@@ -63,8 +53,6 @@ bool TreeDB::insert(DBentry* newEntry){
     root = ins;
     root->setLeft(NULL);
     root->setRight(NULL);
-    if(ins->getEntry()->getActive())
-        active_plus_one();
     cout<<"Success"<<endl;
     return true;
     }
@@ -83,8 +71,6 @@ bool TreeDB::insert_in_bst (TreeNode *ins, TreeNode *curr){
     if (ins->getEntry()->getName() < curr->getEntry()->getName()) { // Go left
         if (curr->getLeft() == NULL){
             curr->setLeft(ins); // Found spot
-            if(ins->getEntry()->getActive())
-                active_plus_one();
             cout<<"Success"<<endl;
             return true;
         }
@@ -94,8 +80,6 @@ bool TreeDB::insert_in_bst (TreeNode *ins, TreeNode *curr){
     else {
         if (curr->getRight() == NULL){
             curr->setRight(ins);    // Found spot
-            if(ins->getEntry()->getActive())
-                active_plus_one();
             cout<<"Success"<<endl;
             return true;
         }
@@ -134,83 +118,81 @@ DBentry* TreeDB::find_in_bst(string name, TreeNode *curr){
             return find_in_bst(name,curr->getRight());
     }
 }
-/*
+
+//A better way to implement remove
 bool TreeDB::remove(string name){
     if(root == NULL){
         cout<<"Error: entry does not exist"<<endl;
         return false;
     }
-    else if (root->getEntry()->getName() == name){//delete root
-        if(root->getEntry()->getActive())//active minus one
-            active_minus_one();
-        if(root->getLeft() == NULL && root->getRight() == NULL){//only root
-            delete root;
-            root = NULL;
-            cout<<"Success"<<endl;
-            return true;
-        }
-        else if(root->getLeft() == NULL){//no left child, use right's leftmost one
-            if(root->getRight()->getLeft() == NULL){//right child has no left child
-                TreeNode *temp = root;
-                root = root->getRight();
-                delete temp;
-                temp = NULL;
-            }
-            else{//right child has left child
-                TreeNode *prev = root->getRight();
-                TreeNode *curr = root->getRight()->getLeft();
-                while(curr->getLeft() != NULL){
-                    prev = curr;
-                    curr = curr->getLeft();
-                }//found right's leftmost child at curr
-                if(curr->getRight() != NULL)
-                    prev->setLeft(curr->getRight());
-                else
-                    prev->setLeft(NULL);
-                TreeNode *temp = root;
-                curr->setRight(root->getRight());
-                root = curr;
-                delete temp;
-                temp = NULL;
-            }
-            cout<<"Success"<<endl;
-            return true;
-        }
-        else{//has left child
-            if(root->getLeft()->getRight() == NULL){//left child has no right child
-                TreeNode *temp = root;
-                root->getLeft()->setRight(root->getRight());
-                root = root->getLeft();
-                delete temp;
-                temp = NULL;
-            }
-            else{//left child has right child
-                TreeNode *prev = root->getLeft();
-                TreeNode *curr = root->getLeft()->getRight();
-                while(curr->getRight() != NULL){
-                    prev = curr;
-                    curr = curr->getRight();
-                }//found left's rightmost child at curr
-                if(curr->getLeft() != NULL)
-                    prev->setRight(curr->getRight());
-                else
-                    prev->setRight(NULL);
-                TreeNode *temp = root;
-                curr->setRight(root->getRight());
-                root = curr;
-                delete temp;
-                temp = NULL;
-            }
-            cout<<"Success"<<endl;
-            return true;
-        }
+    TreeNode *fakeroot = new TreeNode(NULL); //fakeroot is the parent of the root
+    fakeroot->setLeft(root);
+    bool flag = root->remove(name, fakeroot);
+    root = fakeroot->getLeft();
+    delete fakeroot;
+    fakeroot = NULL;
+    if(flag)
+        cout<<"Success"<<endl;
+    else
+        cout<<"Error: entry does not exist"<<endl;
+    return flag;
+}
+
+// prints the number of probes for a specified name
+void TreeDB::printProbes(string name){
+    int probe = 1;
+    if(root == NULL)
+        cout<<"Error: entry does not exist"<<endl;
+    if(root->getEntry()->getName() == name){
+        cout<<probe<<endl;
+        return;
     }
-    else{
-        TreeNode *prev = NULL;
-        TreeNode *curr = root;
-        remove_in_bst(name,prev,curr);
+    printProbesHelper(name, root, probe);
+}
+
+// a helper function to print the  probesCount
+void TreeDB::printProbesHelper(string name, TreeNode *curr, int probe){
+    if(curr->getEntry()->getName() == name){
+        cout<<probe<<endl;
+        return;
     }
-}*/
+    
+    if(curr->getLeft()== NULL && curr->getRight() == NULL &&
+            curr->getEntry()->getName() != name){
+        cout<<"Error: entry does not exist"<<endl;
+        return;
+    }
+    
+    if(curr->getEntry()->getName() > name)
+        printProbesHelper(name, curr->getLeft(), probe+1);
+    else if(curr->getEntry()->getName() < name)
+        printProbesHelper(name, curr->getRight(), probe+1);
+}
+   
+void TreeDB::countActive () const{
+    cout<<coutActiveHelper(root)<<endl;
+}
+
+int TreeDB::coutActiveHelper(TreeNode *root) const{
+    if(root == NULL)
+        return 0;
+    return (root->getEntry()->getActive() + coutActiveHelper(root->getLeft())
+            + coutActiveHelper(root->getRight()));
+            
+}
+
+void TreeDB::updatestatus(string name, bool status){
+    DBentry *temp = find(name);
+    if(temp!=NULL){
+        temp->setActive(status);
+        cout<<"Success"<<endl;
+    }
+}
+
+//Older function which is not used finally. New recursive method is used for remove,
+//it saves lines of code while might takes more space for running b/c of recursion.
+
+/*
 bool TreeDB::remove(string name){
     if(root == NULL){
         cout<<"Error: entry does not exist"<<endl;
@@ -272,10 +254,10 @@ bool TreeDB::remove(string name){
         remove_in_bst(name,prev,curr);
     }
 }
-
+*/
 
 //a helper function for remove
-bool TreeDB::remove_in_bst(string name, TreeNode *prev, TreeNode *curr){
+/*bool TreeDB::remove_in_bst(string name, TreeNode *prev, TreeNode *curr){
     if(curr->getEntry()->getName() == name){//found
         if(curr->getEntry()->getActive())
             active_minus_one();
@@ -362,57 +344,4 @@ bool TreeDB::remove_in_bst(string name, TreeNode *prev, TreeNode *curr){
             remove_in_bst(name,curr,curr->getRight());
     }
 }
-
-// prints the number of probes for a specified name
-void TreeDB::printProbes(string name){
-    int probe = 1;
-    if(root == NULL)
-        cout<<"Error: entry does not exist"<<endl;
-    if(root->getEntry()->getName() == name){
-        cout<<probe<<endl;
-        return;
-    }
-    printProbesHelper(name, root, probe);
-}
-
-// a helper function to print the  probesCount
-void TreeDB::printProbesHelper(string name, TreeNode *curr, int probe){
-    if(curr->getEntry()->getName() == name){
-        cout<<probe<<endl;
-        return;
-    }
-    
-    if(curr->getLeft()== NULL && curr->getRight() == NULL &&
-            curr->getEntry()->getName() != name){
-        cout<<"Error: entry does not exist"<<endl;
-        return;
-    }
-    
-    if(curr->getEntry()->getName() > name)
-        printProbesHelper(name, curr->getLeft(), probe+1);
-    else if(curr->getEntry()->getName() < name)
-        printProbesHelper(name, curr->getRight(), probe+1);
-}
-   
-void TreeDB::countActive () const{
-    cout<<active<<endl;
-}
-
-void TreeDB::updatestatus(string name, bool status){
-    DBentry *temp = find(name);
-    if(temp != NULL){
-        if(status == true){
-            if(temp->getActive() == false)
-                active_plus_one();
-        }
-        if(status == false){
-            if(temp->getActive() == true)
-                active_minus_one();
-        }
-        temp->setActive(status);
-        cout<<"Success"<<endl;
-    }
-}
-
-// Prints the entire tree, in ascending order of key/name
-//friend ostream& operator<< (ostream& out, const TreeDB& rhs);
+*/

@@ -8,7 +8,6 @@ class TreeDB {
 
 private:
    TreeNode* root;
-   int active;
    // You will need to add additional private functions
 
 public:
@@ -39,9 +38,6 @@ public:
    //a helper function for find
    DBentry* find_in_bst(string name, TreeNode *curr);
    
-   void active_plus_one();
-   void active_minus_one();
-   
    void printall();
    //a helper function for print
    void print(TreeNode *curr);
@@ -64,7 +60,7 @@ public:
    // computes and prints out the total number of active entries
    // in the database (i.e. entries with active==true).
    void countActive () const;
-   
+   int coutActiveHelper(TreeNode *root) const;
    
    // updates the status of a required name
    void updatestatus(string name, bool status);

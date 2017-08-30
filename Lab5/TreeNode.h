@@ -27,6 +27,10 @@ public:
 
     // gets the right child of the TreeNode
     TreeNode* getRight() const;
+    
+    bool remove(string name, TreeNode *parent);
+    
+    TreeNode* findMax();
 
     // returns a pointer to the DBentry the TreeNode contains. 
     DBentry* getEntry() const;
