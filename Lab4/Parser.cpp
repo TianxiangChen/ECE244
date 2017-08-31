@@ -204,12 +204,7 @@ bool NameChecking4(stringstream &lineStream, string &name, int &nodeid){//For pr
         else if( stoi_convert.peek()!=' ' && !stoi_convert.eof()){
             Print_InvalidArgu();
             return false;
-        }
-        else if(nodeid<LowBound){
-            Print_NodeExceed(nodeid);
-            return false;
-        }
-        
+        }     
     }
     
     if (TooManyArguChecking(lineStream)){
